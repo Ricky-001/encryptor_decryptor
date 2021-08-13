@@ -10,7 +10,7 @@ Currently, the script utilizes the following encryption/ decryption algorithms:-
 - Morse Code (with audio)
 (please note that this list is intended to increase over time as more algorithms shall be implemented)
 
-# No dependencies except for the Morse Code, which requires the "pygame" module to play audio
+[No dependencies except for the Morse Code, which requires the "pygame" module to play audio]
 
 ____________
 
