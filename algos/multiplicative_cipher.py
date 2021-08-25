@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import argparse
 from utilities.tools import clear
 from utilities.colors import color
 
@@ -67,14 +68,32 @@ def decrypt(cipher,key=None):
     return plain
 
 
+def parsefile(filename):
+    message = ''
+    try:
+        with open(filename) as f:
+            for line in f:
+                message+=line
+    except FileNotFoundError:
+        print('{}[-] File not found{}\n{}[!] Please make sure the file with the filename exists in the current working directory{}'.format(color.RED,color.END,color.YELLOW,color.END))
+        quit()
+    return message
+
+
+
 def run():
-    key=None
     try:
         clear()
         choice = input('{}[?]{} Encrypt or Decrypt? [e/d] : '.format(color.BLUE,color.END))
 
         if choice == 'e' or choice == 'E':
-            pt = input('{}[?]{} Enter the Plaintext message to encrypt: '.format(color.BLUE,color.END))
+            # whether to load a file for the plaintext or type it from the console
+            filechoice = input('{}[?]{} Load from a file? [y/N] : '.format(color.BLUE,color.END)).lower()
+            if filechoice != 'y':
+                pt = input('{}[?]{} Enter the Plaintext message to encrypt: '.format(color.BLUE,color.END))
+            else:
+                filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
+                pt = parsefile(filename)
             try:
                 key = int(input('{}[?]{} Enter the Key to encrypt the message: '.format(color.BLUE,color.END)))
                 ciphertext = encrypt(pt, key)
@@ -83,7 +102,13 @@ def run():
                 print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))                
 
         elif choice == 'd' or choice == 'D':
-            ct = input('{}[?]{} Enter the Ciphertext message to decrypt: '.format(color.BLUE,color.END))
+            # whether to load a file for the plaintext or type it from the console
+            filechoice = input('{}[?]{} Load from a file? [y/N] : '.format(color.BLUE,color.END)).lower()
+            if filechoice != 'y':
+                ct = input('{}[?]{} Enter the Ciphertext message to decrypt: '.format(color.BLUE,color.END))
+            else:
+                filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
+                ct = parsefile(filename)
             try:
                 key = int(input('{}[?]{} Enter the Key used to encrypt the message (leave blank to attempt Bruteforce): '.format(color.BLUE,color.END)))
                 plaintext = decrypt(ct, key)
@@ -98,7 +123,138 @@ def run():
         else:
             print('{}[-] Please provide a valid coice of action{}'.format(color.RED,color.END))
         quit()
+    except KeyboardInterrupt:
+        print('\n{}[!] Exiting...{}'.format(color.RED,color.END))
+
+
+def main():
+    key=None
+    try:
+        clear()
+
+        # script description
+        parser = argparse.ArgumentParser(description='Multiplicative Cipher Encryption & Decryption')
+        # encryption group option (single option --encrypt)
+        enc_group = parser.add_argument_group('Encryption Options')
+        enc_group.add_argument('-e','--encrypt', help='Encrypt a given Plaintext', default=False, action='store_true')
+        # decryption group options (--decrypt and --brute)
+        dec_group = parser.add_argument_group('Decryption Options')
+        dec_group.add_argument('-d','--decrypt', help='Decrypt a given Ciphertext', default=False, action='store_true')
+        dec_group.add_argument('-B','--brute', help='Bruteforce decryption (to be used only with -d, --decrypt)', default=False, action='store_true')
+        # file option - whether to load from a file
+        parser.add_argument('-f','--file', help='Load the Plaintext/ Ciphertext from a file', default=False, action='store_true')
+        # message (either plain or cipher)  -   handled later on based on options
+        parser.add_argument('TEXT', help='Plaintext or Ciphertext (based on mode)')
+        parser.add_argument('-k','--key', default=None, type=int, help='Key used for encryption/ decryption')
+
+        try:
+            args = parser.parse_args()
+        except:
+            choice = input('{}[?]{} Encrypt or Decrypt? [e/d] : '.format(color.BLUE,color.END))
+            
+            if choice == 'e' or choice == 'E':
+                # whether to load a file for the plaintext or type it from the console
+                filechoice = input('{}[?]{} Load from a file? [y/N] : '.format(color.BLUE,color.END)).lower()
+                if filechoice != 'y':
+                    pt = input('{}[?]{} Enter the Plaintext message to encrypt: '.format(color.BLUE,color.END))
+                else:
+                    filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
+                    pt = parsefile(filename)
+                try:
+                    key = int(input('{}[?]{} Enter the Key to encrypt the message: '.format(color.BLUE,color.END)))
+                    ciphertext = encrypt(pt, key)
+                    print('{}[+] The Ciphertext with Key = {}{}{} is: {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,ciphertext,color.END))
+                except ValueError:
+                    print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))                
+            
+            elif choice == 'd' or choice == 'D':
+                # whether to load a file for the plaintext or type it from the console
+                filechoice = input('{}[?]{} Load from a file? [y/N] : '.format(color.BLUE,color.END)).lower()
+                if filechoice != 'y':
+                    ct = input('{}[?]{} Enter the Ciphertext message to decrypt: '.format(color.BLUE,color.END))
+                else:
+                    filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
+                    ct = parsefile(filename)
+                try:
+                    key = int(input('{}[?]{} Enter the Key used to encrypt the message (leave blank to attempt Bruteforce): '.format(color.BLUE,color.END)))
+                    plaintext = decrypt(ct, key)
+                    print('{}[+] The Plaintext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,plaintext,color.END))
+                except ValueError:
+                    if not key:
+                        decrypt(ct,None)
+                        print('\n{}[!]{} The bruteforce attack completed successfully!'.format(color.GREEN,color.END))
+                    else:
+                        print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))
+            
+            else:
+                print('{}[-] Please provide a valid coice of action{}'.format(color.RED,color.END))
+            quit()
+
+        # parsing command line argumets (provided the necvessary ones are given)
+        if args.encrypt:                            # if encrypt flag is on
+            if args.decrypt:                        # decrypt flag should be off
+                print('{}[-] Please select only one option among Encrypt or Decrypt at a time{}'.format(color.RED,color.END))
+                quit()
+            if args.brute:                          # bruteforce flag should be off
+                print('{}[-] Bruteforce can only be used during Decryption{}'.format(color.RED,color.END))
+                quit()
+            else:                                   # good to go - call enc() function and display result
+                if args.file:
+                    pt = parsefile(args.TEXT)
+                else:
+                    pt = args.TEXT
+                try:
+                    key = int(args.key)
+                    ciphertext = encrypt(pt, key)
+                    print('{}[+] The Ciphertext with Key = {}{}{} is: {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,ciphertext,color.END))
+                except ValueError:
+                    print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))
+
+        elif args.decrypt:                          # if decrypt flag is on
+            if args.brute:                          # if bruteforce option is also on
+                if args.file:
+                    ct = parsefile(args.TEXT)
+                    decrypt(ct,None)
+                else:
+                    decrypt(args.TEXT,None)             # call decrypt function directly - steps not required
+                print('\n{}[!]{} The bruteforce attack completed successfully!'.format(color.GREEN,color.END))
+            else:                                   # no bruteforce - steps known
+                if args.file:
+                    ct = parsefile(args.TEXT)
+                else:
+                    ct = args.TEXT
+                try:
+                    key = int(args.key)
+                    plaintext = decrypt(ct, key)
+                    print('{}[+] The Plaintext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,plaintext,color.END))
+                except ValueError:
+                    if not key:
+                        decrypt(pt,None)
+                        print('\n{}[!]{} The bruteforce attack completed successfully!'.format(color.GREEN,color.END))
+                    else:
+                        print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))
+                except TypeError:
+                    try:
+                        key = int(input('{}[?]{} Enter the Key used to encrypt the message (leave blank to attempt Bruteforce): '.format(color.BLUE,color.END)))
+                        plaintext = decrypt(ct, key)
+                        print('{}[+] The Plaintext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,plaintext,color.END))
+                    except ValueError:
+                        if not key:
+                            decrypt(ct,None)
+                            print('\n{}[!]{} The bruteforce attack completed successfully!'.format(color.GREEN,color.END))
+                        else:
+                            print('{}[-] Please enter a valid key{} (one of the following):-\n{}{}{}'.format(color.RED,color.END,color.YELLOW,keys,color.END))
+
+
+        # if no arguments are provided except for positional (TEXT)
+        else:
+            print('{}[-] At least one of Encryption or Decryption action is required{}'.format(color.RED,color.END))
 
     except KeyboardInterrupt:
         print('\n{}[!] Exiting...{}'.format(color.RED,color.END))
+
+if __name__ =='__main__':
+    main()
+else:
+    run()
 
