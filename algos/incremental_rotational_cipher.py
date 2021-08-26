@@ -131,7 +131,7 @@ def decrypt(cipher,offset=None):
                 if not cipher_bak[i].isalpha():
                     plain = plain[:i] + cipher_bak[i] + plain[i:]
             # prints all possible combinations for rotation steps -26 to +26
-            print('{}[!]{} Offset = {}\t: {}{}{}'.format(color.GREEN,color.END,offset,color.GREEN,plain,color.END))
+            print('{}[!]{} Offset = {}\t: {}{}{}'.format(color.GREEN,color.END,offset,color.RED,plain,color.END))
             offset+=1            
         return
 

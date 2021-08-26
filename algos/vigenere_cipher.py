@@ -24,7 +24,7 @@ def generate_FinalKey(text,key):
             if not text[c].isalpha():                                             # checks if the character is not an alphabet
                 finalkey = finalkey[:c] + text[c] + finalkey[c:len(finalkey)-1]   # replaces key alphabets with the exact special character
     else:
-        finalkey = key
+        finalkey=key
 
     return finalkey
 

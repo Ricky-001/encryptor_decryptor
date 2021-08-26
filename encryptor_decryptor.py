@@ -31,13 +31,13 @@ def run():
         clear()
         banner.show()
 
-        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Multiplicative Cipher','Vigenere Cipher','Morse Code [with Audio]','Autokey Cipher']
+        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Multiplicative Cipher','Vigenere Cipher','Morse Code (with Audio)','Autokey Cipher',]
 
         for i in range(len(cipher_types)):
             print('{}({}) {}{}'.format(color.YELLOW, i+1, cipher_types[i], color.END),end='\t')
             if i%2:
                 print('')
-        print('\t\t\t{}(0) EXIT{}'.format(color.YELLOW, color.END),end='\t')
+        print('\n\t\t\t{}(0) EXIT{}'.format(color.YELLOW, color.END),end='\t')
         try:
             type_choice = int(input('\n{}[*] {}Choose the type of Cipher to work with >>>{} '.format(color.BLUE,color.CYAN,color.END)))
             if type_choice not in range(1,len(cipher_types)+1):

@@ -51,8 +51,11 @@ def decrypt(ct):
 # plays the Morse code audio 
 # fetches the audio files from a folder (required!)
 def playSound(code):
-    import pygame.mixer, pygame.time
-    
+    try:
+        import pygame.mixer, pygame.time
+    except ModuleNotFoundError:
+        print('{}[-] PyGame module not installed! Cannot play audio...{}\n{}[!] Please make sure the PyGame module is installed for the Audio feature to work properly{}\n[*] You can install it from the requirements file using the following command:\n{}    pip install -r requirements.txt{}\n[*] You can also install it manually with the command:\n{}    pip install PyGame{}'.format(color.RED,color.END,color.YELLOW,color.END,color.BLUE,color.END,color.BLUE,color.END))
+        quit()
     DELAY = 0.2  # Time between sounds
     mixer = pygame.mixer
     mixer.init()
@@ -78,7 +81,11 @@ def playSound(code):
             else:
                 PATH += char + '_morse_code.ogg'    # follow naming convention and modify path
             
-            sound = mixer.Sound(PATH)               # load the sound from path
+            try:
+                sound = mixer.Sound(PATH)               # load the sound from path
+            except FileNotFoundError:
+                print('{}[-] Audio File not found{}\n{}[!] Please ensure that the Utilities directory is present in the same directory as this script and its contents remain unchanged!{}'.format(color.RED,color.END,color.YELLOW,color.END))
+                quit()
             beep = sound.play()                     # play the sound and capture the channel as beep
             while beep.get_busy():      # if audio playing (check channel status)
                 if not flag:

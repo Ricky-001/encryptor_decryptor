@@ -101,7 +101,7 @@ def decrypt(cipher,steps=None):
 
             plain = ''.join(map(chr,plainASCII))
             # prints all possible combinations for rotation steps -26 to +26
-            print('{}[!]{} ROT{} \t:{}{}{}'.format(color.GREEN,color.END,str(steps),color.GREEN,plain,color.END))
+            print('{}[!]{} ROT{} \t:{}{}{}'.format(color.GREEN,color.END,str(steps),color.RED,plain,color.END))
             steps+=1
         return
 

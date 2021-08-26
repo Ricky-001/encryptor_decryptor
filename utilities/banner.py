@@ -84,10 +84,13 @@ help_banner = \
   |  {}providing no decryption key will trigger a brute force decryption{}   |
   |  (this feature will be mentioned for the specific algorithms)        |
   |                                                                      |
+  |  {}Note:- {}Please ensure that the PyGame module is installed{}            |
+  |         {}for the Morse Code Audio to work (provided in requirements){}  |
+  |                                                                      |
   |                                             created by ~ {}Ricky-001{}   |
   |                   {}{}https://github.com/Ricky-001/custompass_generator{}  |
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-""".format(color.ORANGE,color.END,color.GREEN,color.END, color.BLUE,color.UNDERLINE,color.END)
+""".format(color.ORANGE,color.END, color.RED,color.YELLOW,color.END,color.YELLOW,color.END ,color.GREEN,color.END, color.BLUE,color.UNDERLINE,color.END)
 
 
 def show():
