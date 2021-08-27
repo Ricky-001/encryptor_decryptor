@@ -7,6 +7,8 @@ Currently, the script utilizes the following encryption/ decryption algorithms:-
 - Multiplicative Cipher
 - Vigenere Cipher
 - Autokey Cipher
+- ROT47 Cipher
+- Multitap (SMS Keypad) Code
 - Morse Code (with audio)
 (please note that this list is intended to increase over time as more algorithms shall be implemented)
 
