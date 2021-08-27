@@ -227,7 +227,7 @@ def main():
                 else:
                     filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
                     ct = parsefile(filename)
-                key = input('{}[?]{} Enter the Key to encrypt the message: '.format(color.BLUE,color.END))
+                key = input('{}[?]{} Enter the Key to decrypt the message: '.format(color.BLUE,color.END))
                 plaintext = decrypt(ct, key)
                 print('{}[+] The Plaintext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,plaintext,color.END))
             else:
@@ -244,12 +244,12 @@ def main():
                     ciphertext = encrypt(pt,args.KEY)
                 else:
                     ciphertext = encrypt(args.TEXT,args.KEY)
-                print('{}[+] The Ciphertext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,key,color.GREEN,color.RED,ciphertext,color.END))
+                print('{}[+] The Ciphertext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,args.KEY,color.GREEN,color.RED,ciphertext,color.END))
 
         elif args.decrypt:                          # if decrypt flag is on
             if args.file:
                 ct = parsefile(args.TEXT)
-                plaintext = encrypt(ct,args.KEY)
+                plaintext = decrypt(ct,args.KEY)
             else:
                 plaintext = decrypt(args.TEXT,args.KEY)
             print('{}[+] The Plaintext with Key = {}{}{} is : {}{}{}'.format(color.GREEN,color.YELLOW,args.KEY,color.GREEN,color.RED,plaintext,color.END))
@@ -260,9 +260,8 @@ def main():
     
     except KeyboardInterrupt:
         print('\n{}[!] Exiting...{}'.format(color.RED,color.END))
+        quit()
 
 if __name__ == '__main__':
     main()
-else:
-    run()
 

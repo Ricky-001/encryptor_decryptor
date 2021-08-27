@@ -252,9 +252,8 @@ def main():
 
     except KeyboardInterrupt:
         print('\n{}[!] Exiting...{}'.format(color.RED,color.END))
+        quit()
 
 if __name__ =='__main__':
     main()
-else:
-    run()
 

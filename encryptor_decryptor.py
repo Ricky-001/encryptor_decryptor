@@ -23,6 +23,9 @@ def call_EncryptorDecryptor(choice):
     elif choice==6:
         from algos import autokey
         autokey.run()
+    elif choice==7:
+        from algos import multitap
+        multitap.run()
     else:
         print('{}[!] Please enter a number between {}1 and {}{}'.format(color.RED,color.ORANGE,len(cipher_types),color.END))
 
@@ -31,7 +34,7 @@ def run():
         clear()
         banner.show()
 
-        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Multiplicative Cipher','Vigenere Cipher','Morse Code (with Audio)','Autokey Cipher',]
+        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Multiplicative Cipher','Vigenere Cipher','Morse Code (with Audio)','Autokey Cipher','Multitap (SMS Keypad) Code',]
 
         for i in range(len(cipher_types)):
             print('{}({}) {}{}'.format(color.YELLOW, i+1, cipher_types[i], color.END),end='\t')

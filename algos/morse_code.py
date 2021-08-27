@@ -54,7 +54,7 @@ def playSound(code):
     try:
         import pygame.mixer, pygame.time
     except ModuleNotFoundError:
-        print('{}[-] PyGame module not installed! Cannot play audio...{}\n{}[!] Please make sure the PyGame module is installed for the Audio feature to work properly{}\n[*] You can install it from the requirements file using the following command:\n{}    pip install -r requirements.txt{}\n[*] You can also install it manually with the command:\n{}    pip install PyGame{}'.format(color.RED,color.END,color.YELLOW,color.END,color.BLUE,color.END,color.BLUE,color.END))
+        print('{}[-] PyGame module not installed! Cannot play audio...{}\n{}[!] Please make sure the PyGame module is installed for the Audio feature to work properly{}\n[*] You can install it from the requirements file using the following command:\n{}    pip install -r requirements.txt{}\n[!] You can also install it manually with the command:\n{}    pip install PyGame{}'.format(color.RED,color.END,color.YELLOW,color.END,color.BLUE,color.END,color.BLUE,color.END))
         quit()
     DELAY = 0.2  # Time between sounds
     mixer = pygame.mixer
@@ -95,15 +95,12 @@ def playSound(code):
             sleep(3 * DELAY)            # once finished, add delay for next character
 
 
-def parsefile(filename,act=None):
+def parsefile(filename):
     message = ''
     try:
         with open(filename) as f:
             for line in f:
-                if act:
-                    message+=line
-                else:
-                    message+=line
+                message+=line
     
     except FileNotFoundError:
         print('{}[-] File not found{}\n{}[!] Please make sure the file with the filename exists in the current working directory{}'.format(color.RED,color.END,color.YELLOW,color.END))
@@ -135,7 +132,7 @@ def run():
                 ct = input('{}[?]{} Enter the Morse Code : '.format(color.BLUE,color.END))       # ciphertext input
             else:
                 filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
-                ct = parsefile(filename,True)
+                ct = parsefile(filename)
             plaintext = decrypt(ct)                       # calling dec() function with the input
             print('{}[+]{} The Plaintext is : {}{}{}'.format(color.GREEN,color.END,color.RED,plaintext,color.END))
         else:
@@ -198,7 +195,7 @@ def main():
                     ct = input('{}[?]{} Enter the Morse Code : '.format(color.BLUE,color.END))       # ciphertext input
                 else:
                     filename = input('{}[?]{} Enter the filename: '.format(color.BLUE,color.END))
-                    ct = parsefile(filename,True)
+                    ct = parsefile(filename)
                 plaintext = decrypt(ct)                       # calling dec() function with the input
                 print('{}[+]{} The Plaintext is : {}{}{}'.format(color.GREEN,color.END,color.RED,plaintext,color.END))
             else:
@@ -228,7 +225,7 @@ def main():
 
         elif args.decrypt:                          # if decrypt flag is on
             if args.file:
-                ct = parsefile(args.TEXT,True)
+                ct = parsefile(args.TEXT)
                 plaintext = decrypt(ct)
             else:
                 plaintext = decrypt(args.TEXT)    # call dec() function and display result
@@ -253,10 +250,9 @@ def main():
 
     except KeyboardInterrupt:
         print('\n{}[!] Exiting...{}'.format(color.RED,color.END))
+        quit()
 
 
 if __name__ =='__main__':
     main()
-else:
-    run()
 
