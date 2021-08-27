@@ -285,9 +285,9 @@ def main():
             else:                                   # no bruteforce - steps known
                 if args.file:
                     ct = parsefile(args.TEXT)
-                    plaintext,steps = enc(ct)
+                    plaintext,steps = dec(ct)
                     if steps:
-                        print('{}[+]{} The Plaintext with {}{}{} steps is : {}{}{}'.format(color.GREEN,color.END,color.YELLOW,steps,color.END,color.RED,ciphertext,color.END))
+                        print('{}[+]{} The Plaintext with {}{}{} steps is : {}{}{}'.format(color.GREEN,color.END,color.YELLOW,steps,color.END,color.RED,plaintext,color.END))
                     else:
                         print('{}[!]{} The bruteforce attack completed successfully!'.format(color.GREEN,color.END))
                 else:
