@@ -6,17 +6,17 @@ from utilities.colors import color
 
 def call_EncryptorDecryptor(choice):
     if choice==1:
-        from algos import rotational_cipher
-        rotational_cipher.run()
+        from algos import shift
+        shift.run()
     elif choice==2:
-        from algos import incremental_rotational_cipher
-        incremental_rotational_cipher.run()
+        from algos import incremental_shift
+        incremental_shift.run()
     elif choice==3:
-        from algos import multiplicative_cipher
-        multiplicative_cipher.run()
+        from algos import affine
+        affine.run()
     elif choice==4:
-        from algos import vigenere_cipher
-        vigenere_cipher.run()
+        from algos import vigenere
+        vigenere.run()
     elif choice==5:
         from algos import morse_code
         morse_code.run()
@@ -37,13 +37,13 @@ def run():
         clear()
         banner.show()
 
-        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Multiplicative Cipher','Vigenere Cipher','Morse Code (with Audio)','Autokey Cipher','Multitap (SMS Keypad) Code','Rot47',]
+        cipher_types = ['Rotational (Caesar) Cipher','Incremental Rotation Cipher','Affine Cipher\t','Vigenere Cipher','Morse Code (with Audio)','Autokey Cipher','Multitap (SMS Keypad) Code','Rot47',]
 
         for i in range(len(cipher_types)):
-            print('{}({}) {}{}'.format(color.YELLOW, i+1, cipher_types[i], color.END),end='\t')
+            print('{}({}) {}{}'.format(color.YELLOW, i+1, cipher_types[i], color.END),end='\t\t')
             if i%2:
                 print('')
-        print('\n\t\t\t{}(0) EXIT{}'.format(color.YELLOW, color.END),end='\t')
+        print('\n\t\t\t\t{}(0) EXIT{}'.format(color.YELLOW, color.END),end='\t')
         try:
             type_choice = int(input('\n{}[*] {}Choose the type of Cipher to work with >>>{} '.format(color.BLUE,color.CYAN,color.END)))
             if type_choice not in range(1,len(cipher_types)+1):
