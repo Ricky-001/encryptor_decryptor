@@ -4,7 +4,7 @@ A simplistic implementation of common encryption and decryption mechanisms in Py
 Currently, the script utilizes the following encryption/ decryption algorithms:-
 - Rotational/ Shift (Caesar) Cipher
 - Incremental Rotational Cipher
-- Multiplicative Cipher
+- Multiplicative (Affine) Cipher
 - Vigenere Cipher
 - Autokey Cipher
 - ROT47 Cipher
