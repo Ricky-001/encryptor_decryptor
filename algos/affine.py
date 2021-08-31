@@ -140,7 +140,7 @@ def main():
         clear()
 
         # script description
-        parser = argparse.ArgumentParser(description='Multiplicative Cipher Encryption & Decryption')
+        parser = argparse.ArgumentParser(description='Multiplicative (Affine) Cipher Encryption & Decryption')
         # encryption group option (single option --encrypt)
         enc_group = parser.add_argument_group('Encryption Options')
         enc_group.add_argument('-e','--encrypt', help='Encrypt a given Plaintext', default=False, action='store_true')
