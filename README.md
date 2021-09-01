@@ -15,6 +15,8 @@ Currently, the script utilizes the following encryption/ decryption algorithms:-
 [No dependencies except for the Morse Code, which requires the "pygame" module to play audio]
 
 ____________
+## Usage
+<strong>encryptor_decryptor.py</strong>
 
 * Choose the algorithm to use followed by the mode of operation ('E' or 'D' fopr encryption or decryption) and follow the on-screen instructions.
 * For algorithms that are feasibly susceptible to brute force attacks, leaving the key empty will trigger a brute force against the ciphertext during the decryption process.
